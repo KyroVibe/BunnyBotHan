@@ -6,6 +6,10 @@
 /*----------------------------------------------------------------------------*/
     
 package frc.robot
+
+import org.team997coders.spartanlib.helpers.PIDConstants
+
+import frc.robot.control.TeleopState;
     
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -27,6 +31,11 @@ object RobotMap {
 
     val rightTrigger: Int = 3
     val leftTrigger: Int = 2
+
+    val buttonA: Int = 1
+    val buttonB: Int = 2
+    val buttonX: Int = 3
+    val buttonY: Int = 4
 
     val armTalon: Int = 9
     val bunnyVictor: Int = 10
@@ -53,9 +62,30 @@ object RobotMap {
      * 2 | 3
      */
     val encoderZeros: Array<Double> = arrayOf(0.0, 0.0, 0.0, 0.0)
-    val modulePs: Array<Double> = arrayOf(0.0, 0.0, 0.0, 0.0)
-    val moduleIs: Array<Double> = arrayOf(0.0, 0.0, 0.0, 0.0)
-    val moduleDs: Array<Double> = arrayOf(0.0, 0.0, 0.0, 0.0)
+    val moduleAzimuthConstants: Array<PIDConstants> = arrayOf(
+      PIDConstants(0.0, 0.0, 0.0),
+      PIDConstants(0.0, 0.0, 0.0),
+      PIDConstants(0.0, 0.0, 0.0),
+      PIDConstants(0.0, 0.0, 0.0)
+    )
+    val moduleDriveConstants: Array<PIDConstants> = arrayOf(
+      PIDConstants(0.0, 0.0, 0.0),
+      PIDConstants(0.0, 0.0, 0.0),
+      PIDConstants(0.0, 0.0, 0.0),
+      PIDConstants(0.0, 0.0, 0.0)
+    )
+
+  }
+
+  object Preferences {
+
+    val teleopState: TeleopState = TeleopState.AssistedControlState
+
+    val intakeInSpeed: Double = 0.75
+    val intakeOutSpeed: Double = 0.9
+
+    val driveTranslationModifier: Double = 0.8
+    val driveRotationModifier: Double = 1.0
 
   }
 
