@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SerialPort
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 
 import org.team997coders.spartanlib.swerve.SwerveDrive
 import org.team997coders.spartanlib.swerve.module.SwerveModule
@@ -16,7 +17,7 @@ import frc.robot.Robot
 typealias Ports = RobotMap.Ports
 typealias Values = RobotMap.Values
 
-class Swerve : SwerveDrive(Values.wheelBase, Values.trackWidth) {
+class Swerve : SwerveDrive(Values.wheelBase, Values.trackWidth), Subsys {
 
   var m_gyro: AHRS? = null
 
@@ -73,6 +74,10 @@ class Swerve : SwerveDrive(Values.wheelBase, Values.trackWidth) {
 
   fun resetGyro() {
     m_gyro?.reset()
+  }
+
+  override fun updateSmartDashboard() {
+    SmartDashboard.putNumber("Swerve/Test", modules[0].getSpeedVector().magnitude)
   }
 
   fun getAngle(): Double {

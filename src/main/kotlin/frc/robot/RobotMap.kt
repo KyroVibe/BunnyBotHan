@@ -37,6 +37,12 @@ object RobotMap {
     val buttonX: Int = 3
     val buttonY: Int = 4
 
+    val grabberPistonA: Int = 0
+    val grabberPistonB: Int = 1
+
+    val buttonLeftBumper: Int = 5
+    val buttonRightBumper: Int = 6
+
     val armTalon: Int = 9
     val bunnyVictor: Int = 10
 
@@ -55,6 +61,10 @@ object RobotMap {
 
     val wheelBase: Double = 1.0
     val trackWidth: Double = 1.0
+
+    val armUp: Double = 12000.0
+    val armDown: Double = 0.0
+    val armDegreesRange: Double = 112.0
 
     /**
      * 1 | 0
@@ -81,7 +91,7 @@ object RobotMap {
 
     val teleopState: TeleopState = TeleopState.AssistedControlState
 
-    val intakeInSpeed: Double = 0.75
+    val intakeInSpeed: Double = -0.75
     val intakeOutSpeed: Double = 0.9
 
     val driveTranslationModifier: Double = 0.8

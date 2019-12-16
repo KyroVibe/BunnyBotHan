@@ -14,10 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj.Joystick
 
-import frc.robot.subsystems.Swerve
-import frc.robot.subsystems.Arm
+import frc.robot.subsystems.*
 
-import frc.robot.control.TeleopState
+import frc.robot.control.*
 
 import org.team997coders.spartanlib.helpers.threading.SpartanRunner
 
@@ -30,8 +29,11 @@ class Robot: TimedRobot() {
     val m_gamepad2: Joystick = Joystick(RobotMap.Ports.gamepad2)
     val m_swerve: Swerve = Swerve()
     val m_arm: Arm = Arm()
+    val m_intake: Intake = Intake()
 
-    val m_currentTeleopState: TeleopState = TeleopState.DormentState;
+    val m_controllers: Array<Controller> = arrayOf(PrimaryController(), SecondaryController())
+
+    val m_currentTeleopState: TeleopState = TeleopState.DormentState
   }
 
   var m_chooser: SendableChooser<String> = SendableChooser()
@@ -42,33 +44,30 @@ class Robot: TimedRobot() {
     SmartDashboard.putData("Auto mode", m_chooser)
   }
 
-  override fun robotPeriodic() { }
+  override fun robotPeriodic() {
+    m_swerve.updateSmartDashboard()
+    m_arm.updateSmartDashboard()
+    m_intake.updateSmartDashboard()
+  }
 
   override fun disabledInit() { }
 
   override fun disabledPeriodic () { }
   
-  override fun autonomousInit() { }
-
-  override fun autonomousPeriodic() { }
-
-  override fun teleopInit() { }
-
-  override fun teleopPeriodic() {
-    when (m_currentTeleopState) {
-      TeleopState.ManualControlState -> {
-        // Primary:
-        
-      }
-      TeleopState.AssistedControlState -> {
-        // TODO: Secondary's controls are setpoint controlled and Primary has some basic drive corrections
-      }
-      TeleopState.AIControlState -> {
-        // TODO: Basically Autonomous
-      }
-      else -> System.out.println("The current state is " + m_currentTeleopState.name)
-    }
+  override fun autonomousInit() {
+    m_controllers.forEach { it.autoInit() }
   }
 
-  override fun testPeriodic() { }
+  override fun autonomousPeriodic() {
+    m_controllers.forEach { it.autoPeriodic() }
+  }
+
+  override fun teleopInit() {
+    m_controllers.forEach { it.teleopInit() }
+  }
+
+  override fun teleopPeriodic() {
+    m_controllers.forEach { it.teleopPeriodic() }
+  }
+
 }

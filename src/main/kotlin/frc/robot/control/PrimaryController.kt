@@ -27,17 +27,24 @@ class PrimaryController: Controller {
 
         Robot.m_swerve.setSwerveMixer(f, s, r, isFieldOrientated)
 
-        onButtonPressed(RobotMap.Ports.buttonY, Runnable {
+        if (getButtonPressed(RobotMap.Ports.buttonY)) {
           Robot.m_swerve.resetGyro()
-        })
-
+        }
       }
       else -> System.out.println("Current State: '" + Robot.m_currentTeleopState.name + "'")
     }
   }
 
-  fun onButtonPressed(button: Int, exec: Runnable) {
-    super.onButtonPressed(Robot.m_gamepad1, button, exec)
+  fun getButtonPressed(button: Int): Boolean {
+    return Robot.m_gamepad1.getRawButtonPressed(button)
+  }
+
+  fun getButton(button: Int): Boolean {
+    return Robot.m_gamepad1.getRawButton(button)
+  }
+
+  fun getButtonReleased(button: Int): Boolean {
+    return Robot.m_gamepad1.getRawButtonReleased(button)
   }
 
 }
